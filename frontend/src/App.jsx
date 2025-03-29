@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Bot, User, Send, CircleUserRound, Youtube, Moon, Sun } from "lucide-react";
+import { Bot, User, Send, CircleUserRound, Youtube, Moon, Sun, Link, Lightbulb,LoaderCircle  } from "lucide-react";
 
 function App() {
   const [input, setInput] = useState("");
@@ -131,10 +131,11 @@ function App() {
   }
 
   return (
-    <div className={`flex flex-col min-h-screen ${darkMode ? "bg-gray-900 text-white" : "bg-white text-black"}`}>
+    <>
+    <div className={`flex flex-col min-h-screen  ${darkMode ? "bg-gray-900 text-white" : "bg-white text-black"}`}>
       {/* Header */}
-      <div className={`p-4 font-[poppins] shadow-lg mx-auto w-full flex justify-between items-center ${darkMode ? "bg-gray-800" : "bg-gray-200"}`}>
-        <ul className="flex items-center gap-2">
+      <div className={`p-4 font-[poppins]  shadow-lg mx-auto w-full flex justify-between items-center ${darkMode ? "bg-gray-800" : "bg-gray-200"}`}>
+        <ul className="flex items-center  gap-2">
           <li><Bot /></li>
           <li className="md:text-2xl">StudyBot</li>
         </ul>
@@ -146,62 +147,105 @@ function App() {
       </div>
 
       {/* Chat Section */}
-      <div className="flex-1 chat-section p-4 space-y-2 overflow-auto">
-        {messages.map((msg, index) => (
-          <div key={index} className={`flex gap-2 ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
-            {msg.role === "bot" && <Bot className="text-gray-500" />} {/* Bot icon on the left */}
-            <div className={`p-3 rounded-lg w-fit max-w-lg ${
-              msg.role === "user"
-                ? "bg-blue-500 text-white self-end ml-auto"
-                : "bg-gray-300 text-black self-start mr-auto"
-            }`}>
-              {/* Render video links if available */}
-        {msg.videos ? (
-          <ol>
-            {msg.videos.map((video, index) => (
-              <li key={index}>
-                <strong>Title:</strong> {video.title}
-                <br />
-                {/* <strong>Timestamps:</strong> {video.timestamps} */}
-                {/* <br /> */}
-                <strong>Video Link:</strong>{" "}
-                <a href={video.video_url} target="_blank" rel="noopener noreferrer" className="text-blue-500">
-                  Watch Video
-                </a>
-              </li>
-            ))}
-          </ol>
-        ) : msg.websites ? ( 
-          /* Render website links if available */
-          <ul>
-            The below are some of the top websites :
-            {msg.websites.map((site, idx) => (
-              <li key={idx} className="mb-2">
-                <a href={site.link} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
-                  {site.title} 
-                </a>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          /* If no videos or websites, render only text */
-          <p>{msg.text}</p>
-        )}
-            </div>
-            {msg.role === "user" && <CircleUserRound className="text-blue-500" />} {/* User icon on the right */}
-          </div>
-        ))}
 
-        {/* Loading state */}
-        {loading && (
-          <div className="flex gap-2 justify-start">
-            <Bot className="text-gray-500" />
-            <div className="p-3 rounded-lg w-fit max-w-xs bg-gray-300 text-black self-start mr-auto">
-              Loading...
+      {messages.length === 0 && (
+       <div
+          className={`flex flex-col items-center justify-center mx-auto p-4 border border-gray-300 rounded-lg shadow-lg w-[90%] sm:w-[50%] h-[50%] sm:h-auto mt-16 ${darkMode ? "bg-gray-800 text-white" : "bg-white text-black"}`}
+        >
+          <div className="flex mt-2 mb-2 flex-col items-center">
+            <div className="flex items-center gap-2 mb-4">
+              <h1 className="text-3xl">StudyBot</h1>
+              <Bot className="text-gray-500 text-2xl" />
+            </div>
+            <div className="w-[70%]">
+              <p className="text-xl text-center sm:block hidden">
+                I'm here to help you with all your study-related questions. Whether you're struggling with a topic, need resources, or want to explore new learning materials, I'm ready to assist.
+              </p>
+            </div>
+        
+            {/* This part is for smaller screens */}
+            <div className="flex justify-center items-center mt-4 sm:hidden">
+              <p className="text-2xl font-semibold">How can I help you today?</p>
+            </div>
+        
+            {/* The 3 boxes will be hidden on smaller screens */}
+            <div className="flex items-center gap-4 mt-4 sm:flex hidden">
+              <div className="flex flex-col hover:scale-105 duration-300 items-center gap-2 mt-4 border border-gray-300 rounded-lg p-4 shadow-lg">
+                <Youtube size={40} />
+                <p>Youtube Videos!</p>
+              </div>
+        
+              <div className="flex flex-col hover:scale-105 duration-300 items-center gap-2 mt-4 border border-gray-300 rounded-lg p-4 shadow-lg">
+                <Link size={40} />
+                <p>Websites links!</p>
+              </div>
+        
+              <div className="flex flex-col hover:scale-105 duration-300 items-center gap-2 mt-4 border border-gray-300 rounded-lg p-4 shadow-lg">
+                <Lightbulb size={40} />
+                <p>Conducts Quizzes</p>
+              </div>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
+        <div className="flex-1 chat-section p-4 space-y-2 overflow-auto">
+          {messages.map((msg, index) => (
+            <div key={index} className={`flex gap-2 ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
+              {msg.role === "bot" && <Bot className="text-gray-500" />} {/* Bot icon on the left */}
+              <div className={`p-3 rounded-lg w-fit max-w-lg ${
+                msg.role === "user"
+                  ? "bg-blue-500 text-white self-end ml-auto"
+                  : "bg-gray-300 text-black self-start mr-auto"
+              }`}>
+                {/* Render video links if available */}
+          {msg.videos ? (
+            <ol>
+              {msg.videos.map((video, index) => (
+                <li key={index}>
+                  <strong>Title:</strong> {video.title}
+                  <br />
+                  {/* <strong>Timestamps:</strong> {video.timestamps} */}
+                  {/* <br /> */}
+                  <strong>Video Link:</strong>{" "}
+                  <a href={video.video_url} target="_blank" rel="noopener noreferrer" className="text-blue-500">
+                    Watch Video
+                  </a>
+                </li>
+              ))}
+            </ol>
+          ) : msg.websites ? ( 
+            /* Render website links if available */
+            <ul>
+              The below are some of the top websites :
+              {msg.websites.map((site, idx) => (
+                <li key={idx} className="mb-2">
+                  <a href={site.link} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
+                    {site.title} 
+                  </a>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            /* If no videos or websites, render only text */
+            <p>{msg.text}</p>
+          )}
+              </div>
+              {msg.role === "user" && <CircleUserRound className="text-blue-500" />} {/* User icon on the right */}
+            </div>
+          ))}
+
+          {/* Loading state */}
+          {loading && (
+            <div className="flex gap-2 justify-start">
+              <Bot className="text-gray-500" />
+              <div className="p-3 rounded-lg w-fit max-w-xs bg-gray-300 text-black self-start mr-auto">
+                <LoaderCircle className="spinner" />
+              </div>
+            </div>
+            
+          )}
+          
+        </div>
 
       {/* Input Field */}
       <div className="flex flex-col justify-center p-8 font-[poppins] shadow-lg w-full sticky bottom-0 left-0">
@@ -272,6 +316,7 @@ function App() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 
