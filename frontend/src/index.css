@@ -7,9 +7,99 @@ body{
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
-  }
+}
   
-  .spinner {
+.spinner {
     animation: spin 1s linear infinite;
-  }
-  
+}
+
+@keyframes scaleout_and_rotate {
+    0%{
+        transform: rotate(0deg); 
+    }
+    100%{
+        transform: rotate(360deg) scale(4);   
+    }
+}
+
+
+/* Keyframes for the Moon icon disappearing to the left */
+@keyframes moonDisappear {
+    from {
+        transform: translateX(0) translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(-100px) translateY(0);
+        opacity: 0;
+    }
+}
+
+/* Keyframes for the Sun icon disappearing to the left */
+@keyframes sunDisappear {
+    from {
+        transform: translateX(0) translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(-100px) translateY(0);
+        opacity: 0; 
+    }
+}
+
+/* Keyframes for the Sun icon coming from the right */
+@keyframes sunAppear {
+    from {
+        transform: translateX(100px) translateY(0);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(12px) translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Keyframes for the Moon icon coming from the right */
+@keyframes moonAppear {
+    from {
+        transform: translateX(100px) translateY(0);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(12px) translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Animation for the Moon icon */
+.moonIcon {
+    animation: moonDisappear 0.5s ease-in forwards;
+}
+
+/* Animation for the Sun icon */
+.sunIcon {
+    animation: sunDisappear 0.5s ease-in forwards;
+}
+
+/* Animation for the Sun icon appearing from the right */
+.sunIconAppearing {
+    animation: sunAppear 0.5s ease-out forwards ;
+}
+
+/* Animation for the Moon icon appearing from the right */
+.moonIconAppearing {
+    animation: moonAppear 0.5s ease-out forwards;
+}
+
+/* Style for the button */
+.nameBtn {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    /* background-color: rgb(242, 236, 236);  */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    overflow: hidden;
+}

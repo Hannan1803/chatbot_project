@@ -139,18 +139,38 @@ function App() {
           <li><Bot /></li>
           <li className="md:text-2xl">StudyBot</li>
         </ul>
-        <button onClick={toggleDarkMode} id="darkbtn"
+        {/* <button onClick={toggleDarkMode} id="darkbtn"
         className="p-2 hover:scale-120 hover:cursor-pointer transition-transform hover:rotate-360 duration-600 ease-in-out"
         >
           {darkMode ? <Sun id="darkIcon" className="text-yellow-400" /> : <Moon id="darkIcon" className="text-gray-600" />}
-        </button>
+        </button> */}
+
+        <button
+              // className="nameBtn hover:cursor-pointer"
+              className = {`nameBtn hover:cursor-pointer `}
+              onClick={toggleDarkMode}
+            >
+              {/* Conditionally render Moon or Sun with their respective animations */}
+              {!darkMode ? (
+                <Moon className="moonIcon moonIconAppearing text-black appearBtn" fill="black" size={40} />
+              ) : (
+                <Sun className="sunIconAppearing text-orange-400 " fill="orange" size={40} />
+              )}
+              {/* When darkMode is active (Sun is visible), display the other icon with an animation */}
+              {darkMode ? (
+                <Moon className="moonIcon moonIconDisappear text-black" fill="black" size={40}/>
+              ) : (
+                <Sun className="sunIcon sunIconDisappear text-orange-400" fill="orange" size={40} />
+              )}
+            </button>
+
       </div>
 
       {/* Chat Section */}
 
       {messages.length === 0 && (
        <div
-          className={`flex flex-col items-center justify-center mx-auto p-4 border border-gray-300 rounded-lg shadow-lg w-[90%] sm:w-[50%] h-[50%] sm:h-auto mt-16 ${darkMode ? "bg-gray-800 text-white" : "bg-white text-black"}`}
+          className={`flex flex-col items-center justify-center mx-auto p-4 border border-gray-300 rounded-lg shadow-lg w-[90%] sm:w-[50%] h-[50%] sm:h-auto mt-24 ${darkMode ? "bg-gray-800 text-white" : "bg-white text-black"}`}
         >
           <div className="flex mt-2 mb-2 flex-col items-center">
             <div className="flex items-center gap-2 mb-4">
@@ -158,7 +178,7 @@ function App() {
               <Bot className="text-gray-500 text-2xl" />
             </div>
             <div className="w-[70%]">
-              <p className="text-xl text-center sm:block hidden">
+              <p className="text-md text-center sm:block hidden">
                 I'm here to help you with all your study-related questions. Whether you're struggling with a topic, need resources, or want to explore new learning materials, I'm ready to assist.
               </p>
             </div>
